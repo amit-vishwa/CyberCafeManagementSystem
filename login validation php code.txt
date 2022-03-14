@@ -1,0 +1,55 @@
+<?php 
+
+$conn=new mysqli("localhost", "root", "", "cafe");
+		if($conn->connect_error)
+		die("Connection failed ".$conn->connect_error);
+		if(isset($_POST['submit']))
+		{
+			$user=$_POST['username'];
+			$pass=$_POST['password'];		
+			if($_POST['user1']=="admin")
+			{
+				$sql="Select * from admin_login where user_id='$user' and password='$pass'";
+				$result=$conn->query($sql);
+				if($result->num_rows>0)
+				{
+					while($row=$result->fetch_assoc())
+					{
+						$u=$row['user_id'];
+						$p=$row['password'];
+					}
+					if(($user==$u)&&($pass==$p))
+					{
+						echo "Login successful";
+						header("location:adminlogin.php");
+					}
+				}
+				else
+				{
+					echo "Login failed";
+				}
+			}
+			if($_POST['user1']=="User")
+			{
+				$sql="Select * from user_login where user_id='$user' and password='$pass'";
+				$result=$conn->query($sql);
+				if($result->num_rows>0)
+				{
+					while($row=$result->fetch_assoc())
+					{
+						$u=$row['user_id'];
+						$p=$row['password'];
+					}
+					if(($user==$u)&&($pass==$p))
+					{
+						echo "Login successful";
+					}
+				}
+				else
+				{
+					echo "Login failed";
+				}
+			}
+		}
+		?>
+		
